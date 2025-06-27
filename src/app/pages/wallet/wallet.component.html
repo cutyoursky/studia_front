@@ -1,0 +1,17 @@
+<h2 class="text-xl font-bold mb-4">Twój portfel</h2>
+
+@if (wallet.length > 0) {
+  <ul>
+    @for (item of wallet; track item.id) {
+      <li class="mb-2 border p-2 rounded">
+        <strong>{{ item.stock_symbol }}</strong> – {{ item.stock_name }}: 
+        {{ item.quantity }} szt. x {{ item.stock_price | currency:'USD' }} = 
+        {{ item.quantity * item.stock_price | currency:'USD' }}
+        <input type="number" [(ngModel)]="item.sellAmount" min="1" [max]="item.quantity" />
+        <button class="ml-4 text-red-600 hover:underline" (click)="sellStock(item)">Sprzedaj</button>
+      </li>
+    }
+  </ul>
+} @else {
+  <p>Nie posiadasz żadnych akcji.</p>
+}

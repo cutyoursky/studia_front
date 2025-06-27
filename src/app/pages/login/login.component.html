@@ -1,0 +1,21 @@
+<div class="max-w-md mx-auto mt-10 p-4 border rounded-xl shadow">
+    <h2 class="text-xl font-bold mb-4">Logowanie</h2>
+  
+    <form #form="ngForm" (ngSubmit)="login(form)">
+      <input ngModel="username" name="username" placeholder="Nazwa użytkownika"
+             class="block w-full mb-3 p-2 border rounded" required />
+  
+      <input ngModel="password" name="password" type="password" placeholder="Hasło"
+             class="block w-full mb-3 p-2 border rounded" required />
+  
+      <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+        Zaloguj się
+      </button>
+      
+      @if (errorMessage) {
+        <div class="text-red-600 mt-3">
+          {{ errorMessage }}
+        </div>
+      }
+    </form>
+  </div>
