@@ -2,9 +2,9 @@
 
 @if (wallet.length > 0) {
   <ul>
-    @for (item of wallet; track item.id) {
+    @for (item of wallet; track item.stock) {
       <li class="mb-2 border p-2 rounded">
-        <strong>{{ item.stock_symbol }}</strong> – {{ item.stock_name }}: 
+        <strong>{{ item.stock_symbol }}</strong>: 
         {{ item.quantity }} szt. x {{ item.stock_price | currency:'USD' }} = 
         {{ item.quantity * item.stock_price | currency:'USD' }}
         <input type="number" [(ngModel)]="item.sellAmount" min="1" [max]="item.quantity" />

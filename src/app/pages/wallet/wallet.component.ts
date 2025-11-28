@@ -24,6 +24,7 @@ export class WalletComponent {
 
     this.http.get<any[]>(`http://localhost:8000/api/wallet/?user_id=${userId}`).subscribe(data => {
       this.wallet = data;
+      console.log(this.wallet);
     });
   }
 
@@ -33,7 +34,7 @@ export class WalletComponent {
 
     this.http.post<{ new_balance: number }>('http://localhost:8000/api/stocks/sell/', {
       user_id: userId,
-      stock_symbol: item.stock_symbol,
+      stock: item,
       quantity: item.sellAmount
     }).subscribe({
       next: (res) => {

@@ -15,12 +15,12 @@ export class BuyStocksComponent {
 
   bought = output<void>(); // <-- output jako EventEmitter
   cancel = output<void>(); // <-- output jako EventEmitter
-
   quantity = 1;
   private http = inject(HttpClient);
   private balanceService = inject(BalanceService)
 
   buyStock() {
+    console.log(this.stock());
     const userId = localStorage.getItem('user_id');
     if (!userId) {
       alert('Musisz być zalogowany!');
@@ -29,7 +29,7 @@ export class BuyStocksComponent {
 
     const payload = {
       user_id: +userId,
-      stock_id: this.stock().id,
+      stock: this.stock(),
       quantity: this.quantity,
     };
 

@@ -3,6 +3,8 @@ import { Component, OnInit, output } from '@angular/core';
 import { Stock, StockService } from '../../services/stock.service';
 import { CommonModule } from '@angular/common';
 import { BuyStocksComponent } from '../buy-stocks/buy-stocks.component';
+import { Subscription, interval } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-stocks',
@@ -12,15 +14,28 @@ import { BuyStocksComponent } from '../buy-stocks/buy-stocks.component';
 })
 export class StocksComponent implements OnInit{
   stocks: Stock[] = [];
+  private subscription: Subscription | undefined;
   selectedStock: Stock | null = null;
   balanceChanged = output<number>(); // <-- output jako EventEmitter
 
   constructor(private stockService: StockService) {}
 
   ngOnInit(): void {
-    this.stockService.getStocks().subscribe((data) => {
+    // Pobieraj dane co 5 sekund
+    this.subscription = interval(10000)
+      .pipe(
+        // Za każdym razem pobieraj aktualny stock
+        switchMap(() => this.stockService.getStocks())
+      )
+      .subscribe(data => {
+        this.stocks = data;
+        console.log('Aktualizacja:', this.stocks);
+      });
+
+    // Pobranie od razu przy starcie
+    this.stockService.getStocks().subscribe(data => {
       this.stocks = data;
-    })
+    });
   }
 
   selectStock(stock: Stock) {

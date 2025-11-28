@@ -3,7 +3,7 @@
         @for (stock of stocks; track stock.symbol) {
       <li class="mb-2 p-2 border rounded" (click)="selectStock(stock)" 
           [class.bg-blue-100]="selectedStock?.symbol === stock.symbol">
-        <strong>{{ stock.symbol }}</strong> - {{ stock.name }}: 
+        <strong>{{ stock.symbol }}: </strong>
         <span class="text-green-600">{{ stock.price | currency:'USD' }}</span>
       </li>
     }
